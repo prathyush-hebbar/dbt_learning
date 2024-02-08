@@ -2,7 +2,7 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'my_new_project'
+name: 'dbt_practice_certification'
 version: '1.0.0'
 config-version: 2
 
@@ -35,8 +35,23 @@ clean-targets:         # directories to be removed by `dbt clean`
 # continue to be built as views. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 
+sources:
+  dbt_practice_certification : 
+    1_sources :
+      raw:
+        jaffle_shop:
+          sources :
+            +enabled : false
+        stripe :
+          sources :
+            +enabled : true
+
 models:
-  my_new_project:
-    # Applies to all files under models/example/
-    example:
-      +materialized: table
+  dbt_practice_certification :
+    # Applies to all files under models/stg/
+    staging:
+      jaffle_shop:
+        +materialized: view
+      stripe:
+        +materialized: view
+
