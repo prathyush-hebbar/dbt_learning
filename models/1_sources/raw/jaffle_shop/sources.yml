@@ -1,16 +1,41 @@
-version : 2
+version: 2
 
-sources :
-  - name : jaffle_shop
+sources:
+  - name : jaffle_shopy  # tweaked the name because I wanted to understand the difference between "name" and "schema" in this configuration file.
     database : raw
+    schema : jaffle_shop
     tables :
       - name: customers
+        columns:
+          - name: id
+            tests:
+              - not_null
+              - unique                  
       - name: orders
+        columns:
+          - name: id 
+            tests:
+              - not_null
+              - unique
+          - name: user_id  # check this use case later as it is not working because their is no relationship in the "raw" database itself.
+            tests: 
+              - not_null
+              - relationships:
+                  to: source('jaffle_shopy','customers')
+                  field: id 
+          - name: status
+            tests:
+              - accepted_values:
+                  values:
+                    - completed
+                    - shipped
+                    - return_pending
+                    - returned
+                    - placed
         loaded_at_field: _etl_loaded_at
         freshness :
           warn_after: { count: 12 , period: hour }
           error_after: { count: 24 , period: hour }
-        
   # Similarly, we can code the "source freshness" logic in this way too : 
   # freshness: 
   #   warn_after:

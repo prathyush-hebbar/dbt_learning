@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: This staging table contains basic information of the customer.
+    columns:
+      - name: customer_id
+        description: This column is the primary key for the table and each customer is assigned an unique id.
+        tests :
+          - not_null
+          - unique
