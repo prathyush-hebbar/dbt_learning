@@ -35,16 +35,6 @@ clean-targets:         # directories to be removed by `dbt clean`
 # continue to be built as views. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 
-sources:
-  dbt_practice_certification : 
-    1_sources :
-      raw:
-        jaffle_shop:
-          sources :
-            +enabled : false
-        stripe :
-          sources :
-            +enabled : true
 
 models:
   dbt_practice_certification :

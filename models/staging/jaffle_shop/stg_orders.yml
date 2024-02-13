@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: stg_orders
+    description: This staging view contains information about all the orders placed by the customers.
+    columns :
+      - name : order_id
+        description: This column is the primary key for the table and each order is assigned an unique id and in turn it refers to an single customer .
+        tests:
+          - not_null
+          - unique
+      - name : status
+        description : "{{ doc('order_status')}}"
+        tests:
+          - accepted_values:
+              values:
+                - completed
+                - shipped
+                - return_pending
+                - returned
+                - placed
+      - name : customer_id
+        description: This column contains the references of the customer_id in the stg_customers view for each transaction/order .
+        tests :
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
